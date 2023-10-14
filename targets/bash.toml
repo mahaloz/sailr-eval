@@ -1,0 +1,11 @@
+package_name = "bash"
+source_remote = "git://git.sv.gnu.org/bash.git"
+remote_type = "git"
+download = true
+post_download_cmds = []
+version = "bash-5.2"
+package_dir = "bash"
+pre_make_cmds = ["./configure --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "."

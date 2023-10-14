@@ -1,0 +1,11 @@
+package_name = "libbsd"
+source_remote = "https://libbsd.freedesktop.org/releases/libbsd-0.11.7.tar.xz"
+remote_type = "tar"
+download = true
+post_download_cmds = ["./autogen"]
+version = ""
+package_dir = "libbsd-0.11.7"
+pre_make_cmds = ["./configure --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "src"

@@ -1,0 +1,11 @@
+package_name = "openssh-portable"
+source_remote = "https://github.com/openssh/openssh-portable.git"
+remote_type = "git"
+download = true
+post_download_cmds = ["autoreconf"]
+version = "V_9_1_P1"
+package_dir = "openssh-portable"
+pre_make_cmds = ["./configure --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "."

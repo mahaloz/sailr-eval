@@ -1,0 +1,11 @@
+package_name = "libpipeline"
+source_remote = "https://gitlab.com/libpipeline/libpipeline"
+remote_type = "git"
+download = true
+post_download_cmds = ["./bootstrap"]
+version = "1.5.7"
+package_dir = "libpipeline"
+pre_make_cmds = ["./configure --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "."

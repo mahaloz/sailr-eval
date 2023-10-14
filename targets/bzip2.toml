@@ -1,0 +1,12 @@
+package_name = "bzip2"
+source_remote = "git://sourceware.org/git/bzip2.git"
+remote_type = "git"
+download = true
+post_download_cmds = []
+version = "bzip2-1.0.8"
+package_dir = "bzip2"
+pre_make_cmds = []
+override_make_vars = true
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "."

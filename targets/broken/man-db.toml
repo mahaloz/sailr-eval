@@ -1,0 +1,11 @@
+package_name = "man-db"
+source_remote = "https://gitlab.com/cjwatson/man-db.git"
+remote_type = "git"
+download = true
+post_download_cmds = ["./bootstrap"]
+version = "2.11.0"
+package_dir = "man-db"
+pre_make_cmds = ["./configure --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = ""

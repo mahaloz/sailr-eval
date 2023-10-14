@@ -1,0 +1,11 @@
+package_name = "gmp"
+source_remote = "https://gmplib.org/download/gmp/gmp-6.2.1.tar.xz"
+remote_type = "tar"
+download = true
+post_download_cmds = []
+version = ""
+package_dir = "gmp-6.2.1"
+pre_make_cmds = ["./configure --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "."

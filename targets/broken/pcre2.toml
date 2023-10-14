@@ -1,0 +1,11 @@
+package_name = "pcre2"
+source_remote = "https://gitlab.com/procps-ng/procps.git"
+remote_type = "git"
+download = true
+post_download_cmds = ["./autogen.sh"]
+version = "pcre2-10.40"
+package_dir = "pcre2"
+pre_make_cmds = ["./configure"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "src"

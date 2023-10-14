@@ -1,0 +1,11 @@
+package_name = "gnutls"
+source_remote = "https://gitlab.com/gnutls/gnutls.git"
+remote_type = "git"
+download = true
+post_download_cmds = ["./bootstrap"]
+version = "3.7.8"
+package_dir = "gnutls"
+pre_make_cmds = ["./configure --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "src"

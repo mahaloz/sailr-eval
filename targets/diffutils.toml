@@ -1,0 +1,11 @@
+package_name = "diffutils"
+source_remote = "git://git.sv.gnu.org/diffutils.git"
+remote_type = "git"
+download = true
+post_download_cmds = ["./bootstrap"]
+version = "v3.8"
+package_dir = "diffutils"
+pre_make_cmds = ["./configure --quiet --disable-gcc-warnings"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "src"

@@ -1,0 +1,11 @@
+package_name = "iproute2"
+source_remote = "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/snapshot/iproute2-6.0.0.tar.gz"
+remote_type = "tar"
+download = true
+post_download_cmds = []
+version = ""
+package_dir = "iproute2-6.0.0"
+pre_make_cmds = ["./configure --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "ip"

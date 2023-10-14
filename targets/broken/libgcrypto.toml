@@ -1,0 +1,11 @@
+package_name = "libgcrypt"
+source_remote = "git://git.gnupg.org/libgcrypt.git"
+remote_type = "git"
+download = true
+post_download_cmds = ["./autogen.sh"]
+version = "libgcrypt-1.10.1"
+package_dir = "libgcrypt"
+pre_make_cmds = ["./configure --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "src"

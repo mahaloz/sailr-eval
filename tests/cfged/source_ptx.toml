@@ -1,0 +1,271 @@
+[gotos]
+print_field = 0
+main = 0
+search_table = 0
+usage = 0
+fix_output_parameters = 0
+print_spaces = 0
+compare_words = 0
+compare_occurs = 0
+sort_found_occurs = 0
+output_one_roff_line = 0
+generate_all_output = 0
+output_one_tex_line = 0
+define_all_fields = 0
+output_one_dumb_line = 0
+matcher_error = 0
+digest_break_file = 0
+initialize_regex = 0
+swallow_file_in_memory = 0
+unescape_string = 0
+compile_regex = 0
+digest_word_file = 0
+find_occurs_in_text = 0
+
+[bools.print_field]
+or = 0
+and = 0
+
+[bools.main]
+or = 2
+and = 4
+
+[bools.search_table]
+or = 0
+and = 0
+
+[bools.usage]
+or = 0
+and = 0
+
+[bools.fix_output_parameters]
+or = 1
+and = 2
+
+[bools.print_spaces]
+or = 0
+and = 0
+
+[bools.compare_words]
+or = 0
+and = 0
+
+[bools.compare_occurs]
+or = 0
+and = 0
+
+[bools.sort_found_occurs]
+or = 0
+and = 0
+
+[bools.output_one_roff_line]
+or = 1
+and = 0
+
+[bools.generate_all_output]
+or = 0
+and = 0
+
+[bools.output_one_tex_line]
+or = 1
+and = 1
+
+[bools.define_all_fields]
+or = 0
+and = 16
+
+[bools.output_one_dumb_line]
+or = 2
+and = 2
+
+[bools.matcher_error]
+or = 0
+and = 0
+
+[bools.digest_break_file]
+or = 0
+and = 0
+
+[bools.initialize_regex]
+or = 0
+and = 1
+
+[bools.swallow_file_in_memory]
+or = 0
+and = 0
+
+[bools.unescape_string]
+or = 0
+and = 3
+
+[bools.compile_regex]
+or = 0
+and = 0
+
+[bools.digest_word_file]
+or = 0
+and = 1
+
+[bools.find_occurs_in_text]
+or = 0
+and = 12
+
+[func_calls.print_field]
+fputs_unlocked = 1
+printf = 1
+putchar_unlocked = 6
+
+[func_calls.main]
+__errno_location = 2
+__xargmatch_internal = 1
+atexit = 1
+bindtextdomain = 1
+dcgettext = 5
+digest_break_file = 1
+digest_word_file = 2
+error = 7
+exit = 1
+find_occurs_in_text = 1
+fix_output_parameters = 1
+freopen_safer = 1
+generate_all_output = 1
+getopt_long = 1
+initialize_regex = 1
+proper_name_utf8 = 1
+quote = 5
+quotearg_n_style_colon = 2
+set_program_name = 1
+setlocale = 1
+sort_found_occurs = 1
+strcmp = 2
+swallow_file_in_memory = 1
+textdomain = 1
+unescape_string = 3
+usage = 3
+version_etc = 1
+xmalloc = 6
+xnmalloc = 3
+xstrtoimax = 2
+
+[func_calls.search_table]
+compare_words = 1
+
+[func_calls.usage]
+dcgettext = 10
+emit_ancillary_info = 1
+emit_mandatory_arg_note = 1
+emit_stdin_note = 1
+exit = 1
+fprintf = 1
+fputs_unlocked = 8
+printf = 1
+
+[func_calls.fix_output_parameters]
+__ctype_b_loc = 1
+sprintf = 1
+strlen = 2
+to_uchar = 1
+xmalloc = 1
+
+[func_calls.print_spaces]
+putchar_unlocked = 1
+
+[func_calls.compare_words]
+to_uchar = 4
+
+[func_calls.compare_occurs]
+compare_words = 1
+
+[func_calls.sort_found_occurs]
+qsort = 1
+
+[func_calls.output_one_roff_line]
+fputs_unlocked = 8
+print_field = 5
+printf = 1
+putchar_unlocked = 6
+
+[func_calls.generate_all_output]
+define_all_fields = 1
+output_one_dumb_line = 1
+output_one_roff_line = 1
+output_one_tex_line = 1
+
+[func_calls.output_one_tex_line]
+fputs_unlocked = 4
+matcher_error = 1
+print_field = 6
+printf = 1
+putchar_unlocked = 5
+re_match = 1
+to_uchar = 2
+
+[func_calls.define_all_fields]
+__ctype_b_loc = 9
+matcher_error = 5
+re_match = 5
+sprintf = 1
+stpcpy = 1
+to_uchar = 19
+
+[func_calls.output_one_dumb_line]
+fputs_unlocked = 4
+print_field = 7
+print_spaces = 8
+putchar_unlocked = 2
+
+[func_calls.matcher_error]
+__errno_location = 2
+dcgettext = 2
+error = 2
+
+[func_calls.digest_break_file]
+free = 1
+memset = 1
+swallow_file_in_memory = 1
+to_uchar = 1
+
+[func_calls.initialize_regex]
+__builtin_constant_p = 1
+__ctype_b_loc = 1
+__ctype_toupper_loc = 2
+compile_regex = 2
+memset = 1
+toupper = 1
+
+[func_calls.swallow_file_in_memory]
+__errno_location = 2
+clearerr_unlocked = 1
+error = 2
+fread_file = 1
+quotearg_n_style_colon = 2
+read_file = 1
+strcmp = 1
+
+[func_calls.unescape_string]
+__ctype_b_loc = 1
+to_uchar = 1
+
+[func_calls.compile_regex]
+dcgettext = 2
+error = 2
+quote = 2
+re_compile_fastmap = 1
+re_compile_pattern = 1
+strlen = 1
+
+[func_calls.digest_word_file]
+qsort = 1
+swallow_file_in_memory = 1
+x2nrealloc = 1
+
+[func_calls.find_occurs_in_text]
+__ctype_b_loc = 7
+dcgettext = 2
+error = 2
+matcher_error = 2
+quote = 2
+re_search = 2
+search_table = 2
+to_uchar = 9
+x2nrealloc = 1

@@ -1,0 +1,233 @@
+[gotos]
+dorewind = 0
+dosync = 0
+incname = 0
+wipename = 0
+clear_random_data = 0
+periodic_pattern = 0
+dopass = 5
+main = 0
+ignorable_sync_errno = 0
+do_wipefd = 2
+genpattern = 0
+wipefile = 0
+direct_mode = 0
+usage = 0
+wipefd = 0
+passname = 0
+known = 0
+fillpattern = 0
+
+[bools.dorewind]
+or = 0
+and = 0
+
+[bools.dosync]
+or = 0
+and = 0
+
+[bools.incname]
+or = 0
+and = 0
+
+[bools.wipename]
+or = 0
+and = 3
+
+[bools.clear_random_data]
+or = 0
+and = 0
+
+[bools.periodic_pattern]
+or = 0
+and = 0
+
+[bools.dopass]
+or = 3
+and = 7
+
+[bools.main]
+or = 0
+and = 1
+
+[bools.ignorable_sync_errno]
+or = 0
+and = 0
+
+[bools.do_wipefd]
+or = 3
+and = 9
+
+[bools.genpattern]
+or = 2
+and = 0
+
+[bools.wipefile]
+or = 0
+and = 4
+
+[bools.direct_mode]
+or = 0
+and = 0
+
+[bools.usage]
+or = 0
+and = 0
+
+[bools.wipefd]
+or = 0
+and = 0
+
+[bools.passname]
+or = 0
+and = 0
+
+[bools.known]
+or = 0
+and = 0
+
+[bools.fillpattern]
+or = 0
+and = 0
+
+[func_calls.dorewind]
+__errno_location = 1
+ioctl = 1
+lseek = 1
+
+[func_calls.dosync]
+__errno_location = 4
+dcgettext = 2
+error = 2
+fdatasync = 1
+fsync = 1
+ignorable_sync_errno = 2
+sync = 1
+
+[func_calls.incname]
+__assert_fail = 1
+strchr = 1
+
+[func_calls.wipename]
+__errno_location = 3
+base_len = 1
+close = 1
+dcgettext = 5
+dir_name = 1
+dosync = 2
+error = 5
+free = 3
+incname = 1
+last_component = 1
+memcpy = 1
+memset = 1
+open_safer = 1
+quotearg_n_style_colon = 1
+renameatu = 1
+unlink = 1
+xstrdup = 2
+
+[func_calls.clear_random_data]
+randint_all_free = 1
+
+[func_calls.dopass]
+_Static_assert = 3
+__errno_location = 7
+alignfree = 1
+dcgettext = 7
+direct_mode = 2
+dorewind = 1
+dosync = 2
+error = 7
+fillpattern = 1
+getpagesize = 1
+human_readable = 2
+known = 5
+lseek = 1
+passname = 2
+periodic_pattern = 1
+randread = 1
+strcmp = 1
+strcpy = 1
+time = 2
+umaxtostr = 1
+write = 1
+xalignalloc = 1
+
+[func_calls.main]
+__errno_location = 2
+__xargmatch_internal = 1
+atexit = 2
+bindtextdomain = 1
+dcgettext = 5
+error = 5
+exit = 1
+free = 1
+getopt_long = 1
+quotearg_n_style_colon = 3
+randint_all_new = 1
+set_program_name = 1
+setlocale = 1
+strcmp = 2
+textdomain = 1
+usage = 3
+version_etc = 1
+wipefd = 1
+wipefile = 1
+xdectoumax = 1
+xnumtoumax = 1
+xstrdup = 1
+
+[func_calls.do_wipefd]
+__errno_location = 2
+dcgettext = 4
+dopass = 1
+error = 4
+free = 1
+fstat = 1
+ftruncate = 1
+genpattern = 1
+isatty = 1
+lseek = 1
+randint_get_source = 1
+xnmalloc = 1
+
+[func_calls.genpattern]
+memcpy = 1
+randint_choose = 2
+
+[func_calls.wipefile]
+__errno_location = 3
+chmod = 1
+close = 1
+dcgettext = 2
+do_wipefd = 1
+error = 2
+open_safer = 2
+wipename = 1
+
+[func_calls.direct_mode]
+rpl_fcntl = 2
+
+[func_calls.usage]
+dcgettext = 10
+emit_ancillary_info = 1
+emit_mandatory_arg_note = 1
+exit = 1
+fprintf = 1
+fputs_unlocked = 7
+printf = 2
+
+[func_calls.wipefd]
+__errno_location = 1
+dcgettext = 2
+do_wipefd = 1
+error = 2
+rpl_fcntl = 1
+
+[func_calls.passname]
+memcpy = 1
+sprintf = 1
+
+[func_calls.fillpattern]
+memcpy = 2

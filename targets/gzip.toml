@@ -1,0 +1,11 @@
+package_name = "gzip"
+source_remote = "https://ftp.gnu.org/gnu/gzip/gzip-1.12.zip"
+remote_type = "zip"
+download = true
+post_download_cmds = []
+version = ""
+package_dir = "gzip-1.12"
+pre_make_cmds = ["./configure --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir= "."

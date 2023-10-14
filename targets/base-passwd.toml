@@ -1,0 +1,11 @@
+package_name = "base-passwd"
+source_remote = "https://salsa.debian.org/debian/base-passwd/-/archive/debian/3.6.1/base-passwd-debian-3.6.1.zip"
+remote_type = "zip"
+download = true
+post_download_cmds = ["autoreconf -v -f --install"]
+version = ""
+package_dir = "base-passwd-debian-3.6.1"
+pre_make_cmds = ["./configure --disable-debconf --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "."

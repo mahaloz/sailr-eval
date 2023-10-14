@@ -1,0 +1,11 @@
+package_name = "xz"
+source_remote = "https://tukaani.org/xz/xz-5.2.8.tar.gz"
+remote_type = "tar"
+download = true
+post_download_cmds = []
+version = ""
+package_dir = "xz-5.2.8"
+pre_make_cmds = ["./configure --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "src/xz"

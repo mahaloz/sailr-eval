@@ -1,0 +1,11 @@
+package_name = "libedit"
+source_remote = "https://salsa.debian.org/debian/libedit.git"
+remote_type = "git"
+download = true
+post_download_cmds = []
+version = "3.1-20221030-1"
+package_dir = "libedit"
+pre_make_cmds = ["./configure --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "src"

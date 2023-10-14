@@ -1,0 +1,15 @@
+# XXX: should be downloaded manually, configed, and manually edit Makefile for needed flags
+# -O2 -g -save-temps=obj
+package_name = "linux"
+source_remote = "https://github.com/torvalds/linux/archive/refs/tags/v6.0.tar.gz"
+remote_type = "tar"
+download = false
+post_download_cmds = []
+version = "6.4"
+package_dir = "linux-6.0"
+pre_make_cmds = ["make menuconfig"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "kernel"
+skip_compilation = true
+subset_compilation = 100

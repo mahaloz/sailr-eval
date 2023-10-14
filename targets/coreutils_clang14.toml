@@ -1,0 +1,14 @@
+package_name = "coreutils_clang14"
+source_remote = "git://git.sv.gnu.org/coreutils.git"
+remote_type = "git"
+download = true
+post_download_cmds = ["./bootstrap"]
+version = "v9.1"
+package_dir = "coreutils_clang14"
+pre_make_cmds = ["./configure --quiet --disable-gcc-warnings"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "src"
+apply_patch = "coreutils_gnulib.diff"
+c_compiler = "clang-14"
+cpp_compiler = "clang++-14"

@@ -1,0 +1,11 @@
+package_name = "glib"
+source_remote = "https://gitlab.gnome.org/GNOME/glib.git"
+remote_type = "git"
+download = true
+post_download_cmds = []
+version = "2.75.0"
+package_dir = "glib"
+pre_make_cmds = []
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "."

@@ -1,0 +1,11 @@
+package_name = "sqlite3"
+source_remote = "https://www.sqlite.org/2022/sqlite-autoconf-3390400.tar.gz"
+remote_type = "tar"
+download = true
+post_download_cmds = []
+version = ""
+package_dir = "sqlite-autoconf-3390400"
+pre_make_cmds = ["./configure --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "."

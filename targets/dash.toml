@@ -1,0 +1,11 @@
+package_name = "dash"
+source_remote = "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/dash/0.5.11+git20210903+057cd650a4ed-8ubuntu1/dash_0.5.11+git20210903+057cd650a4ed.orig.tar.xz"
+remote_type = "tar"
+download = true
+post_download_cmds = ["./autogen.sh"]
+version = ""
+package_dir = "dash-0.5.11+git20210903+057cd650a4ed"
+pre_make_cmds = ["./configure --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "src"

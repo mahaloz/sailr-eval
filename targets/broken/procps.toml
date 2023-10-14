@@ -1,0 +1,11 @@
+package_name = "procps"
+source_remote = "https://gitlab.com/procps-ng/procps.git"
+remote_type = "git"
+download = true
+post_download_cmds = ["./autogen.sh"]
+version = "v4.0.1"
+package_dir = "procps"
+pre_make_cmds = ["./configure"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "src"

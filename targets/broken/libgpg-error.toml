@@ -1,0 +1,11 @@
+package_name = "libgpg-error"
+source_remote = "git://git.gnupg.org/libgpg-error.git"
+remote_type = "git"
+download = true
+post_download_cmds = ["./autogen.sh"]
+version = "libgpg-error-1.46"
+package_dir = "libgpg-error"
+pre_make_cmds = ["./configure"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "src"

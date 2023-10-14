@@ -1,0 +1,11 @@
+package_name = "glibc"
+source_remote = "git://git.sv.gnu.org/coreutils.git"
+remote_type = "git"
+download = true
+post_download_cmds = []
+version = "glibc-2.36"
+package_dir = "glibc"
+pre_make_cmds = []
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "src"

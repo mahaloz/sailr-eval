@@ -1,0 +1,11 @@
+package_name = "sed"
+source_remote = "git://git.sv.gnu.org/sed.git"
+remote_type = "git"
+download = true
+post_download_cmds = ["./bootstrap"]
+version = "v4.9"
+package_dir = "sed"
+pre_make_cmds = ["./configure --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "sed"

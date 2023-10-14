@@ -1,0 +1,11 @@
+package_name = "tar"
+source_remote = "git://git.sv.gnu.org/tar.git"
+remote_type = "git"
+download = true
+post_download_cmds = ["./bootstrap"]
+version = "release_1_34"
+package_dir = "tar"
+pre_make_cmds = ["./configure --disable-gcc-warnings"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "src"

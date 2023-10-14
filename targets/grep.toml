@@ -1,0 +1,11 @@
+package_name = "grep"
+source_remote = "git://git.sv.gnu.org/grep.git"
+remote_type = "git"
+download = true
+post_download_cmds = ["./bootstrap"]
+version = "v3.8"
+package_dir = "grep"
+pre_make_cmds = ["./configure --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "src"

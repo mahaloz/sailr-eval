@@ -1,0 +1,11 @@
+package_name = "python3"
+source_remote = "https://www.python.org/ftp/python/3.11.0/Python-3.11.0.tar.xz"
+remote_type = "tar"
+download = true
+post_download_cmds = []
+version = ""
+package_dir = "Python-3.11.0"
+pre_make_cmds = ["./configure --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "Python"

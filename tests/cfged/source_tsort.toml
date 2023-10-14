@@ -1,0 +1,90 @@
+[gotos]
+main = 0
+new_item = 0
+search_item = 0
+walk_tree = 0
+recurse_tree = 0
+usage = 0
+detect_loop = 0
+scan_zeros = 0
+record_relation = 0
+
+[bools.main]
+or = 0
+and = 0
+
+[bools.new_item]
+or = 0
+and = 0
+
+[bools.search_item]
+or = 1
+and = 8
+
+[bools.walk_tree]
+or = 0
+and = 0
+
+[bools.recurse_tree]
+or = 0
+and = 1
+
+[bools.usage]
+or = 0
+and = 0
+
+[bools.detect_loop]
+or = 0
+and = 0
+
+[bools.scan_zeros]
+or = 0
+and = 1
+
+[bools.record_relation]
+or = 0
+and = 0
+
+[func_calls.main]
+atexit = 1
+bindtextdomain = 1
+dcgettext = 1
+error = 1
+parse_gnu_standard_options_only = 1
+quote = 1
+set_program_name = 1
+setlocale = 1
+textdomain = 1
+tsort = 1
+usage = 1
+
+[func_calls.new_item]
+xstrdup = 1
+xzalloc = 1
+
+[func_calls.search_item]
+__assert_fail = 4
+new_item = 2
+strcmp = 7
+
+[func_calls.walk_tree]
+recurse_tree = 1
+
+[func_calls.recurse_tree]
+recurse_tree = 2
+
+[func_calls.usage]
+dcgettext = 5
+emit_ancillary_info = 1
+emit_stdin_note = 1
+exit = 1
+fprintf = 1
+fputs_unlocked = 3
+printf = 1
+
+[func_calls.detect_loop]
+error = 1
+
+[func_calls.record_relation]
+strcmp = 1
+xmalloc = 1

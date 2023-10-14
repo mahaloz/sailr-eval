@@ -1,0 +1,28 @@
+Submodule gnulib contains modified content
+diff --git a/gnulib/lib/verify.h b/gnulib/lib/verify.h
+index 07b2f4866f..2a534878b7 100644
+--- a/gnulib/lib/verify.h
++++ b/gnulib/lib/verify.h
+@@ -257,9 +257,12 @@ template <int w>
+ 
+ /* Verify requirement R at compile-time.  Return the value of the
+    expression E.  */
+-
++/*
+ #define verify_expr(R, E) \
+    (_GL_VERIFY_TRUE (R, "verify_expr (" #R ", " #E ")") ? (E) : (E))
++*/
++#define verify_expr(R, E) \
++   R
+ 
+ /* Verify requirement R at compile-time, as a declaration without a
+    trailing ';'.  verify (R) acts like static_assert (R) except that
+@@ -297,7 +300,7 @@ template <int w>
+    is a Clang bug or an Emacs bug; play it safe for now.  */
+ 
+ #if _GL_HAS_BUILTIN_UNREACHABLE
+-# define assume(R) ((R) ? (void) 0 : __builtin_unreachable ())
++# define assume(R) (0)
+ #elif 1200 <= _MSC_VER
+ # define assume(R) __assume (R)
+ #elif (defined GCC_LINT || defined lint) && _GL_HAS_BUILTIN_TRAP

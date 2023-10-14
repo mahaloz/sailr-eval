@@ -1,0 +1,11 @@
+package_name = "findutils"
+source_remote = "https://git.savannah.gnu.org/git/findutils.git"
+remote_type = "git"
+download = true
+post_download_cmds = ["./bootstrap"]
+version = "v4.9.0"
+package_dir = "findutils"
+pre_make_cmds = ["./configure --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "find"

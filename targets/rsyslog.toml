@@ -1,0 +1,12 @@
+package_name = "rsyslog"
+source_remote = "https://www.rsyslog.com/files/download/rsyslog/rsyslog-8.2210.0.tar.gz"
+remote_type = "tar"
+download = true
+post_download_cmds = []
+version = ""
+package_dir = "rsyslog-8.2210.0"
+pre_make_cmds = ["./configure --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "tools"
+rename_dash_files = true

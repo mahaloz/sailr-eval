@@ -1,0 +1,11 @@
+package_name = "systemd"
+source_remote = "https://github.com/systemd/systemd.git"
+remote_type = "git"
+download = true
+post_download_cmds = []
+version = "v252"
+package_dir = "systemd"
+pre_make_cmds = ["./configure"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "."

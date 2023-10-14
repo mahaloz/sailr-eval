@@ -1,0 +1,12 @@
+package_name = "libexpat"
+source_remote = "https://github.com/libexpat/libexpat.git"
+remote_type = "git"
+download = true
+post_download_cmds = ["./buildconf.sh"]
+version = "R_2_5_0"
+package_dir = "libexpat/expat"
+pre_make_cmds = ["./configure --without-docbook --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "xmlwf"
+rename_dash_files = true

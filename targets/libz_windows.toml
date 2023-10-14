@@ -1,0 +1,10 @@
+# Thie project needs to be cloned and built on Windows, then the resulting object files
+# and source files need to be placed in the libz_windows/src directory
+package_name = "libz_windows"
+source_remote = "https://github.com/kiyolee/zlib-win-build.git"
+remote_type = "git"
+download = false
+version = "v1.2.13"
+package_dir = "libz_windows"
+source_dir = "src"
+windows_project = true

@@ -1,0 +1,11 @@
+package_name = "e2fsprogs"
+source_remote = "http://prdownloads.sourceforge.net/e2fsprogs/e2fsprogs-1.46.5.tar.gz"
+remote_type = "tar"
+download = true
+post_download_cmds = []
+version = ""
+package_dir = "e2fsprogs-1.46.5"
+pre_make_cmds = ["./configure --quiet"]
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "e2fsck"

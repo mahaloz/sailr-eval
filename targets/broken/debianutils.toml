@@ -1,0 +1,11 @@
+package_name = "debianutils"
+source_remote = "https://salsa.debian.org/debian/debianutils.git"
+remote_type = "git"
+download = true
+post_download_cmds = []
+version = "v3.0.9"
+package_dir = "debianutils"
+pre_make_cmds = []
+make_cmd = "make"
+post_make_cmds = []
+source_dir = "."
