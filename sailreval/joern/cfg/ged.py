@@ -8,11 +8,11 @@ from .jil.block import Block
 from .jil.statement import (
     Statement, Assignment, Compare, Call, Nop
 )
-from .utils import find_function_root_node
+from .utils import find_function_root_node, node_is_function_start, node_is_function_end
 from sailreval.utils import timeout
 
 _l = logging.getLogger(__name__)
-MAX_NODES_FOR_EXACT_GED = 10
+MAX_NODES_FOR_EXACT_GED = 12
 INVALID_CHOICE_PENALTY = 100000
 
 #
@@ -21,11 +21,19 @@ INVALID_CHOICE_PENALTY = 100000
 
 
 def _collect_graph_roots(g1, g2):
+    # first, depend on the function start node
     g1_start, g2_start = find_function_root_node(g1), find_function_root_node(g2)
     if g1_start is not None and g2_start is not None:
         roots = (g1_start, g2_start,)
     else:
         roots = None
+
+    # second attempt, use predecessors
+    if roots is None:
+        g1_starts = list(node for node in g1.nodes if len(list(g1.predecessors(node))) == 0)
+        g2_starts = list(node for node in g2.nodes if len(list(g2.predecessors(node))) == 0)
+        if len(g1_starts) == 1 == len(g2_starts):
+            roots = (g1_starts[0], g2_starts[0],)
 
     return roots
 
@@ -63,10 +71,12 @@ def graph_edit_distance_core_analysis(
 ):
     roots = _collect_graph_roots(g1, g2) if is_cfg else None
 
-    # edge insertion cost
+    # edge edit cost
     def _edge_ins_cost(*args): return 1
-    # node deletion cost
+    def _edge_sub_cost(*args): return 0
+    # node edit cost
     def _node_del_cost(*args): return 1
+    def _node_sub_cost(*args): return 0
 
     if is_cfg:
         def _edge_ins_cost(*args):
@@ -78,14 +88,10 @@ def graph_edit_distance_core_analysis(
             src = attrs.get('src', None)
             dst = attrs.get('dst', None)
             if penalize_root_exit_edits:
-                if src and src.statements:
-                    last_stmt = src.statements[-1]
-                    if isinstance(last_stmt, Nop) and last_stmt.type == Nop.FUNC_END and src is not dst:
-                        return INVALID_CHOICE_PENALTY
-                elif dst and dst.statements:
-                    first_stmt = dst.statements[0]
-                    if isinstance(first_stmt, Nop) and first_stmt.type == Nop.FUNC_START and dst is not src:
-                        return INVALID_CHOICE_PENALTY
+                if src and src is not dst and node_is_function_end(src):
+                    return INVALID_CHOICE_PENALTY
+                elif dst and dst is not src and node_is_function_start(dst):
+                    return INVALID_CHOICE_PENALTY
 
             return 1
 
@@ -94,32 +100,47 @@ def graph_edit_distance_core_analysis(
             Makes it illegal to delete function start nodes or end nodes
             """
             node = args[0].get('node', None)
-            if penalize_root_exit_edits and node and node.statements:
-                first_stmt = node.statements[0]
-                last_stmt = node.statements[-1]
-                if isinstance(first_stmt, Nop) and first_stmt.type == Nop.FUNC_START:
-                    return INVALID_CHOICE_PENALTY
-                elif isinstance(last_stmt, Nop) and last_stmt.type == Nop.FUNC_END:
+            if penalize_root_exit_edits:
+                if node_is_function_start(node) or node_is_function_end(node):
                     return INVALID_CHOICE_PENALTY
 
             return 1
+
+        def _node_sub_cost(*args):
+            """
+            Makes it illegal to delete function start nodes or end nodes
+            """
+            node_attrs = args[:2]
+            n1, n2 = node_attrs[0].get('node', None), node_attrs[1].get('node', None)
+            if penalize_root_exit_edits:
+                if (node_is_function_start(n1) or node_is_function_end(n1)) and n2 is None:
+                    return INVALID_CHOICE_PENALTY
+
+            return 0
 
     if exact_score or upperbound_approx:
         try:
             with timeout(seconds=with_timeout):
                 if upperbound_approx:
-                    dist = next(nx.optimize_graph_edit_distance(g1, g2, node_del_cost=_node_del_cost, edge_ins_cost=_edge_ins_cost))
+                    dist = next(nx.optimize_graph_edit_distance(
+                        g1, g2, node_del_cost=_node_del_cost, edge_ins_cost=_edge_ins_cost,
+                        node_subst_cost=_node_sub_cost, edge_subst_cost=_edge_sub_cost,
+                    ))
                 else:
-                    dist = nx.graph_edit_distance(g1, g2, roots=roots, node_del_cost=_node_del_cost, edge_ins_cost=_edge_ins_cost)
+                    dist = nx.graph_edit_distance(
+                        g1, g2, roots=roots, node_del_cost=_node_del_cost, edge_ins_cost=_edge_ins_cost,
+                        node_subst_cost=_node_sub_cost, edge_subst_cost=_edge_sub_cost,
+                    )
         except TimeoutError:
             dist = None
     else:
         dist = nx.graph_edit_distance(
-            g1, g2, roots=roots, node_del_cost=_node_del_cost, edge_ins_cost=_edge_ins_cost, timeout=with_timeout
+            g1, g2, roots=roots, node_del_cost=_node_del_cost, edge_ins_cost=_edge_ins_cost, timeout=with_timeout,
+            node_subst_cost=_node_sub_cost, edge_subst_cost=_edge_sub_cost,
         )
 
     # sometimes the score can be computed wrong, which we can fix with a recompute ONCE
-    if dist is not None and dist > INVALID_CHOICE_PENALTY and recover_on_invalid_edits:
+    if dist is not None and dist >= INVALID_CHOICE_PENALTY and recover_on_invalid_edits:
         dist = graph_edit_distance_core_analysis(
             g1, g2, is_cfg=is_cfg, upperbound_approx=upperbound_approx, exact_score=exact_score,
             with_timeout=with_timeout, penalize_root_exit_edits=False, recover_on_invalid_edits=False

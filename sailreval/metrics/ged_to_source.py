@@ -32,13 +32,14 @@ def ged_exact_score(
     """
     Computes the exact GED for a given function.
     """
+    # skip source
     if decompiler == "source":
         return float(0)
     source_cfg, dec_cfg = _verify_has_valid_graphs(func_name, client, source_cfgs, dec_cfgs, decompiler, binary_path)
     if source_cfg is None or dec_cfg is None:
         return None
 
-    return ged_exact(source_cfg, dec_cfg)
+    return ged_exact(dec_cfg, source_cfg)
 
 
 def ged_upperbound_score(
