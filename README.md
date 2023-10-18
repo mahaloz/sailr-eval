@@ -208,7 +208,7 @@ built on the angr decompiler as optimization passes.
 Below you will find instructions for using each of these artifacts.
 
 ### Using SAILR on angr decompiler
-Currently, SAILR is being slowly integrated into the angr master branch. 
+Currently, SAILR is being slowly [integrated into the angr master branch](https://github.com/angr/angr/issues/4229). 
 Until then, you can use the [angr-sailr](https://github.com/mahaloz/angr-sailr/tree/be3855762a84983137696aa14efe2431a86a7e97) 
 fork of angr inside our provided stripped down Dockerfile found in [misc/angr_sailr_dec/Dockerfile](./misc/angr_sailr_dec/Dockerfile).
 You can also use the pre-built docker image found on [Dockerhub](https://hub.docker.com/r/mahaloz/angr_sailr_dec) (~3.5gb).
