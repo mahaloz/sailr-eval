@@ -12,7 +12,7 @@ from sailreval import ALL_DECOMPILERS, SAILR_DECOMPILERS, SAILR_METRICS, ALL_MET
 from sailreval.utils import load_tomls_by_bin_name, bcolors
 from sailreval.utils.sailr_target import SAILRTarget
 from sailreval.utils.compile import DEFAULT_OPTIMIZATION_LEVELS, OPTIMIZATION_LEVELS
-from sailreval.joern import JoernServer, JoernClient
+from pyjoern import JoernServer, JoernClient
 
 from tqdm import tqdm
 import toml

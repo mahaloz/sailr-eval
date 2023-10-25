@@ -1,21 +1,11 @@
 import logging
-import shutil
-from multiprocessing import Pool
-import re
 from pathlib import Path
-import random
-
-from ..joern import JoernClient, JoernServer
-from ..joern.cfg.cfged import cfg_edit_distance as _cfg_edit_distance
-from ..utils import timeout
-from ..joern.cfg.utils import find_function_root_node, correct_decompiler_mappings
-from ..joern.cfg.ged import ged_max, ged_upperbound, ged_exact
-
-from tqdm import tqdm
-import networkx as nx
 from typing import Dict
 
-from ..utils.binary_debug_info import gen_dwarf_addr_to_line_map, read_line_maps
+from pyjoern.mapping import correct_decompiler_mappings, read_line_maps
+from cfgutils.similarity import ged_max, ged_upperbound, ged_exact
+from cfgutils.similarity import cfg_edit_distance as _cfg_edit_distance
+import networkx as nx
 
 l = logging.getLogger(__name__)
 MAX_EXACT_NODES = 12

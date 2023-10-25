@@ -3,13 +3,15 @@ import sys
 import os
 
 from sailreval.utils.binary_debug_info import read_line_maps, gen_dwarf_addr_to_line_map, dump_dwarf_addr_to_line_map
-from sailreval.joern.cfg.utils import cfgs_from_source, correct_source_cfg_addrs, correct_decompiler_mappings
 from sailreval.metrics.ged_to_source import compute_cfg_edit_distance
 from sailreval.decompilers.angr_dec import angr_decompile
 from sailreval.decompilers.ida_dec import ida_decompile
 from sailreval import SAILR_DECOMPILERS
 
 import unittest
+from pyjoern import fast_cfgs_from_source
+from pyjoern.mapping import correct_source_cfg_addrs
+
 
 FILES_PATH = Path(os.path.join(os.path.dirname(os.path.realpath(__file__)), "./cfged/"))
 DECOMPILERS = {
@@ -25,7 +27,7 @@ DECOMPILERS = {
 
 def extract_cfgs_for_decompiler(source_dir: Path, binary_name, decompiler, function=None):
     source_dir = Path(source_dir).absolute()
-    out = cfgs_from_source(source_dir.joinpath(f"{decompiler}_{binary_name}.c"))
+    out = fast_cfgs_from_source(source_dir.joinpath(f"{decompiler}_{binary_name}.c"))
 
     if decompiler == SAILR_DECOMPILERS.SOURCE_CODE:
         linemaps = source_dir.joinpath(f"source_{binary_name}.linemaps")

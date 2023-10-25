@@ -10,17 +10,16 @@ from typing import Dict
 import traceback
 
 import toml
+from tqdm import tqdm
+from pyjoern import JoernClient, JoernServer
 
 from .sailr_target import SAILRTarget
-from ..joern import JoernClient, JoernServer
 from ..utils import timeout
 from . import (
     bcolors, WorkDirContext, SAILR_COMPILATION_RESULTS_DIR, SAILR_DECOMPILATION_RESULTS_DIR,
     SAILR_MEASURE_RESULTS_DIR
 )
 from .. import SAILR_METRICS
-
-from tqdm import tqdm
 
 l = logging.getLogger(__name__)
 
