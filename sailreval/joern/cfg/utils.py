@@ -4,16 +4,17 @@ import shutil
 from tempfile import TemporaryDirectory
 import logging
 import os
-from typing import Dict
+from typing import Dict, Union
 
 import networkx
 from networkx import Graph, DiGraph
 
 from sailreval.utils import WorkDirContext, bcolors
+from .graph_region import GraphRegion
 from .. import JOERN_EXPORT_PATH, JOERN_PARSE_PATH
 from .jil.lifter import lift_graph
 from .jil.block import Block
-from .jil.statement import Nop, Statement
+from .jil.statement import Nop, Statement, MergedRegionStart
 from ...utils.binary_debug_info import read_line_maps
 
 import networkx as nx
@@ -29,10 +30,60 @@ def addr_to_node_map(graph):
     }
 
 
+def expand_region_head_to_block(region: GraphRegion):
+    region_head = region.head
+    if isinstance(region_head, Block):
+        return region_head
+
+    if isinstance(region_head, GraphRegion):
+        return expand_region_head_to_block(region_head)
+
+    raise ValueError(f"Invalid region head type {type(region_head)}")
+
+
+def node_is_function_end(node: Union[Block, GraphRegion]):
+    if node is None:
+        return False
+
+    node = expand_region_head_to_block(node) if isinstance(node, GraphRegion) else node
+    if not node.statements:
+        return False
+
+    last_stmt = node.statements[-1]
+    first_stmt = node.statements[0]
+    if isinstance(last_stmt, Nop) and last_stmt.type == Nop.FUNC_END:
+        return True
+    elif isinstance(first_stmt, MergedRegionStart):
+        for stmt in node.statements:
+            if isinstance(stmt, Nop) and stmt.type == Nop.FUNC_END:
+                return True
+    else:
+        return False
+
+
+def node_is_function_start(node: Union[Block, GraphRegion]):
+    if node is None:
+        return False
+
+    node = expand_region_head_to_block(node) if isinstance(node, GraphRegion) else node
+    if not node.statements:
+        return False
+
+    first_stmt = node.statements[0]
+    if isinstance(first_stmt, MergedRegionStart):
+        for stmt in node.statements:
+            if isinstance(stmt, Nop) and stmt.type == Nop.FUNC_START:
+                return True
+    elif isinstance(first_stmt, Nop) and first_stmt.type == Nop.FUNC_START:
+        return True
+    else:
+        return False
+
+
+
 def find_function_root_node(graph: nx.DiGraph):
     for node in graph.nodes:
-        first_stmt = node.statements[0]
-        if isinstance(first_stmt, Nop) and first_stmt.type == Nop.FUNC_START:
+        if node_is_function_start(node):
             return node
 
     return None
