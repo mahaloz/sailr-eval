@@ -33,7 +33,7 @@ else
 fi
 
 echo "Installing the sailreval Python package locally..."
-pip3 install -e . && python3 -m pyjoern --install
+pip3 install -e . && pyjoern --install
 
 # build docker image
 echo "Building docker image (~6gb)..."
