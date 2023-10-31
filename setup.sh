@@ -20,14 +20,14 @@ else
 fi
 if [ -e /etc/debian_version ]
 then
-    $SUDO apt-get install -y graphviz-dev openjdk-17-jdk unzip
+    $SUDO apt-get install -y graphviz-dev openjdk-19-jdk unzip
 elif [ $IS_MACOS -eq 1 ]
 then
     if ! which brew > /dev/null;
     then
         error "You must have homebrew installed for MacOS installs."
     fi
-    brew install graphviz-dev openjdk@17 unzip
+    brew install graphviz-dev openjdk@19 unzip
 else
     error "System is unknown, please install graphviz-dev on your system!"
 fi
