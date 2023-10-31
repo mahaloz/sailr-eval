@@ -1,6 +1,7 @@
 import itertools
 import os
 import sys
+from copy import deepcopy
 from pathlib import Path
 from collections import defaultdict
 from typing import List, Dict, Tuple, Set
@@ -529,7 +530,7 @@ def summarize_sailr_targets(
             toml_dirs, decompilers, metrics, unique_funcs=unique_funcs, min_func_size=min_func_size,
             max_func_size=max_func_size,
         )
-        full_summary_doc += save_data_as_markdown_table(_summary, show_stats=show_stats) 
+        full_summary_doc += save_data_as_markdown_table(deepcopy(_summary), show_stats=show_stats)
         #pkg_name = list(_summary.keys())[0]
         for name_with_opt in _summary:
             for opt_level in opt_levels:
