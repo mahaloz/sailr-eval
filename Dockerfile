@@ -27,8 +27,8 @@ RUN apt-get update && apt-get -o APT::Immediate-Configure=0 install -y \
 COPY ./sailreval /SAILR/sailreval
 COPY ./*.py /SAILR/
 COPY ./setup.cfg /SAILR/
-# also installs joern
-RUN pip3 install -e ./SAILR
+# also inits the pyjoern project to avoid later download in init
+RUN pip3 install -e ./SAILR && pyjoern --install
 
 #
 #

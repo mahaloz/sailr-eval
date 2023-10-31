@@ -6,7 +6,6 @@ testing/
 /final_results/*
 tests/cfged/angr_sailr*
 tests/cfged/*.dwarf.linemaps
-sailreval/joern/bin/joern-cli/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

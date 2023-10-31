@@ -10,10 +10,10 @@ from multiprocessing import Pool
 from typing import List
 
 import toml
+from pyjoern import JoernClient, JoernServer, fast_cfgs_from_source
+from pyjoern.mapping import cfg_root_node, correct_source_cfg_addrs
 
 from sailreval import ALL_DECOMPILERS, ALL_METRICS, SAILR_DECOMPILERS, SAILR_METRICS, JOERNLESS_SERVER_METRICS
-from sailreval.joern import JoernClient, JoernServer
-from sailreval.joern.cfg.utils import cfgs_from_source, correct_source_cfg_addrs
 from sailreval.metrics import get_metric_function, POST_METRICS
 from sailreval.metrics.ged_to_source import has_cfged_required_files, has_cfged_required_src_files
 from sailreval.utils import bcolors, SAILR_DECOMPILATION_RESULTS_DIR, timeout, SAILR_MEASURE_RESULTS_DIR, WorkDirContext
@@ -192,7 +192,7 @@ def measure_files(file_dir: Path, basename: str, decompilers=None, metrics=None,
                 if require_cfgs:
                     if has_cfged_required_src_files(tfile, target_binary):
                         linemaps_path = tfile.with_suffix(".linemaps")
-                        extracted_cfgs = cfgs_from_source(tfile.absolute())
+                        extracted_cfgs = fast_cfgs_from_source(tfile.absolute())
                         if extracted_cfgs:
                             source_cfgs = correct_source_cfg_addrs(
                                 extracted_cfgs,
@@ -227,7 +227,7 @@ def measure_files(file_dir: Path, basename: str, decompilers=None, metrics=None,
             # extract cfgs if needed
             if require_cfgs and has_cfged_required_files(target_file.absolute()):
                 try:
-                    dec_cfgs = cfgs_from_source(target_file.absolute()) if dec_name != "source" else source_cfgs
+                    dec_cfgs = fast_cfgs_from_source(target_file.absolute()) if dec_name != "source" else source_cfgs
                 except Exception:
                     dec_cfgs = {}
 

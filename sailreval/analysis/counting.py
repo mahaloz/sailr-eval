@@ -1,6 +1,7 @@
 import itertools
 import os
 import sys
+from copy import deepcopy
 from pathlib import Path
 from collections import defaultdict
 from typing import List, Dict, Tuple, Set
@@ -12,7 +13,7 @@ from sailreval import ALL_DECOMPILERS, SAILR_DECOMPILERS, SAILR_METRICS, ALL_MET
 from sailreval.utils import load_tomls_by_bin_name, bcolors
 from sailreval.utils.sailr_target import SAILRTarget
 from sailreval.utils.compile import DEFAULT_OPTIMIZATION_LEVELS, OPTIMIZATION_LEVELS
-from sailreval.joern import JoernServer, JoernClient
+from pyjoern import JoernServer, JoernClient
 
 from tqdm import tqdm
 import toml
@@ -529,7 +530,7 @@ def summarize_sailr_targets(
             toml_dirs, decompilers, metrics, unique_funcs=unique_funcs, min_func_size=min_func_size,
             max_func_size=max_func_size,
         )
-        full_summary_doc += save_data_as_markdown_table(_summary, show_stats=show_stats) 
+        full_summary_doc += save_data_as_markdown_table(deepcopy(_summary), show_stats=show_stats)
         #pkg_name = list(_summary.keys())[0]
         for name_with_opt in _summary:
             for opt_level in opt_levels:
