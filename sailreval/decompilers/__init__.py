@@ -118,7 +118,12 @@ def _decompile(decompiler, binary_path, functions, source_path=None, sailr_targe
 def decompile_file(filepath, sailr_target=None, src_dir=None, functions=None, decompilers=None, cores=1, symboless=False):
     filepath = Path(filepath).absolute()
     source_path = Path(src_dir).joinpath(filepath.with_suffix("").name).with_suffix(".c").absolute() if src_dir else None
-    functions = functions or get_all_funcs(filepath)
+
+    # fill functions only if the decompiler NEEDS it. It's expensive to get all functions (uses angr).
+    # this should always skip for only source
+    uneeded_decs = {SAILR_DECOMPILERS.SOURCE_CODE, SAILR_DECOMPILERS.GHIDRA, SAILR_DECOMPILERS.IDA}
+    if not functions and any([dec not in uneeded_decs for dec in decompilers]):
+        functions = get_all_funcs(filepath)
 
     decompilers = decompilers or ALL_DECOMPILERS
     if not cores or cores == 1:
