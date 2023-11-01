@@ -28,6 +28,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install --upgrade pip
+        sudo apt-get update && sudo apt-get install unzip openjdk-19-jdk graphviz-dev -y
         pip3 install -e .
     - name: Run verification tests
       run: |
