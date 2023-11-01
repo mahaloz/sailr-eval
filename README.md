@@ -45,6 +45,24 @@ Run the setup script to install the dependencies:
 This will install the Python package locally and build the docker container. If you know you don't want to use the docker
 container, then you can directly install the Python package with `pip3 insatll .`. Note: you need `graphviz` on your system.
 
+Verify the installation by running:
+```bash
+./scripts/verify_pipeline.sh
+```
+
+If your installation is correct, you should see some final output like:
+```
+# Evaluation Data
+## Stats
+Layout: ('sum', 'mean', 'median')
+### O2
+Metric     | source      | angr_sailr  | angr_dream 
+---------- | ----------- | ----------- | -----------
+cfged      | 0/0/0.0     | 14/1.75/2.0 | 34/4.25/2.0
+...
+```
+
+
 ## Usage
 After installation, if you used the script normally (i.e. the docker install), than you can use the `docker-eval.sh` script
 which is a proxy to the `eval.py` script, but inside the container. 
