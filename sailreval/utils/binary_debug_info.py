@@ -125,11 +125,12 @@ def gen_dwarf_addr_to_line_map(binary_path: Path, full_search=True):
         total_addr_line, rebased_addr = _start_address(dwarf_info)
         return total_addr_line
 
+    # XXX: uses angr to get all addresses (slow)
     return _all_address(dwarf_info, binary_path)
 
 
-def dump_dwarf_addr_to_line_map(binary_path: Path):
-    addr_to_line = gen_dwarf_addr_to_line_map(binary_path, full_search=False)
+def dump_dwarf_addr_to_line_map(binary_path: Path, full_search=False):
+    addr_to_line = gen_dwarf_addr_to_line_map(binary_path, full_search=full_search)
     output = {
         str(k): v for k, v in addr_to_line.items()
     }
