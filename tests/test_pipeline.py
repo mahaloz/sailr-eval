@@ -49,8 +49,16 @@ class TestPipeline(unittest.TestCase):
         for dec in decompilers:
             assert dec in project_results
             for metric in metrics:
-                assert metric in project_results[dec]
+                # since we are requesting --show-stats in eval, we need to check for the sum instead of normal
+                # metric name; normally, this suffix is not needed.
+                assert f"{metric}_sum" in project_results[dec]
 
+        # make sure real numbers occurred
+        assert project_results[SAILR_DECOMPILERS.SOURCE_CODE][f"{SAILR_METRICS.GOTO_COUNT}_sum"] == 1
+        for dec in decompilers:
+            assert project_results[dec][f"{SAILR_METRICS.FUNC_CALLS}_sum"] > 0
+
+        # verify we had the same number of functions as in source (8)
         metadata = results["metadata"]
         assert metadata["total_unique_functions_in_src"] == 8
         assert metadata["total_unique_functions_in_all_metrics"] == 8
