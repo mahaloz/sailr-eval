@@ -17,8 +17,8 @@ RUN apt-get update && apt-get -o APT::Immediate-Configure=0 install -y \
         libxslt1-dev git libffi-dev cmake libreadline-dev libtool debootstrap \
         debian-archive-keyring libglib2.0-dev libpixman-1-dev qtdeclarative5-dev \
         binutils-multiarch nasm libc6:i386 libgcc1:i386 libstdc++6:i386 \
-        libtinfo5:i386 zlib1g:i386 vim libssl-dev openjdk-8-jdk openjdk-11-jdk \
-        openjdk-17-jdk graphviz-dev \
+        libtinfo5:i386 zlib1g:i386 vim libssl-dev openjdk-8-jdk openjdk-17-jdk \
+        openjdk-19-jdk graphviz-dev python-is-python3 \
     && apt-get install --no-install-recommends -y apt-utils wget unzip tar clang-format \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir SAILR && mkdir versioned_tools && mkdir tools
@@ -41,9 +41,6 @@ WORKDIR versioned_tools
 # ===========================================================
 # angr decompiler (SAILR version)
 # ===========================================================
-
-# make it easier to install
-RUN apt update && apt install python-is-python3 -y
 
 # install angr, and all angr-packages, from the repos (for checkout ability)
 RUN git clone https://github.com/angr/angr-dev.git && ( \
@@ -86,7 +83,10 @@ ENV FORCE_UNSAFE_CONFIGURE=1
 # ===========================================================
 
 # coreutils & compiler reqs
-RUN apt-get install -y apt-utils bison autopoint gettext gperf rsync texinfo libcap-dev libacl1-dev libssl-dev gcc-9 g++-9 clang flex
+RUN apt-get update && \
+    apt-get install -y \
+    apt-utils bison autopoint gettext gperf rsync texinfo libcap-dev libacl1-dev libssl-dev \
+    gcc-9 g++-9 clang flex
 
 #&& \
 #wget http://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb && \

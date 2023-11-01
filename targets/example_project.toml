@@ -1,0 +1,17 @@
+package_name = "example_project"
+# path is relative to ./results/{opt_level}/ directory, so usually should start with ../../
+source_remote = "../../tests/example_project"
+# see other targets for real remote types
+remote_type = "local"
+download = true
+# post_download_cmds are run only once after first download
+# for commands that run before every make, use pre_make_cmds
+post_download_cmds = ["./bootstrap.sh"]
+# useful for git repos (will checkout)
+version = "v0.0.0"
+# the directory name of the entire project
+package_dir = "example_project"
+make_cmd = "make"
+post_make_cmds = []
+# location (inside package_dir) that has the source code
+source_dir = "."

@@ -1,0 +1,100 @@
+[complete_job]
+loc = 7
+gotos = 0
+dec_time = 0.03466939926147461
+
+[next_job]
+loc = 8
+gotos = 0
+dec_time = 0.04835772514343262
+
+[refresh_jobs]
+loc = 8
+gotos = 0
+dec_time = 0.04874897003173828
+
+[fast_unlock]
+loc = 8
+gotos = 0
+dec_time = 0.0477290153503418
+
+[log_workers]
+loc = 7
+gotos = 0
+dec_time = 0.029893875122070312
+
+[schedule_job]
+loc = 16
+gotos = 1
+dec_time = 0.6433112621307373
+
+[job_status]
+loc = 5
+gotos = 0
+dec_time = 0.06193256378173828
+
+[main]
+loc = 4
+gotos = 0
+dec_time = 0.07178354263305664
+
+[complete_job.bools]
+ands = 0
+ors = 0
+
+[complete_job.func_calls]
+puts = 1
+
+[next_job.bools]
+ands = 0
+ors = 0
+
+[next_job.func_calls]
+puts = 1
+
+[refresh_jobs.bools]
+ands = 0
+ors = 0
+
+[refresh_jobs.func_calls]
+puts = 1
+
+[fast_unlock.bools]
+ands = 0
+ors = 0
+
+[fast_unlock.func_calls]
+puts = 1
+
+[log_workers.bools]
+ands = 0
+ors = 0
+
+[log_workers.func_calls]
+puts = 1
+
+[schedule_job.bools]
+ands = 1
+ors = 1
+
+[schedule_job.func_calls]
+complete_job = 2
+next_job = 1
+refresh_jobs = 1
+fast_unlock = 1
+log_workers = 1
+job_status = 1
+
+[job_status.bools]
+ands = 0
+ors = 0
+
+[job_status.func_calls]
+puts = 1
+
+[main.bools]
+ands = 0
+ors = 0
+
+[main.func_calls]
+schedule_job = 1
