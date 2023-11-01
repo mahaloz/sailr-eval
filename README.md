@@ -2,7 +2,7 @@
 The SAILR evaluation pipeline, `sailreval`, is a tool for measuring various aspects of decompilation quality.
 This evaluation pipeline was originally developed for the USENIX 2024 paper ["Ahoy SAILR! There is No Need to DREAM of C:
 A Compiler-Aware Structuring Algorithm for Binary Decompilation"](https://www.zionbasque.com/files/publications/sailr_usenix24.pdf). It supports 26 different C packages from Debian,
-for compiling, decompiling and measuring. Currently, angr, Hex-Rays (IDA Pro), and Ghidra are supported as decompilers.
+for compiling, decompiling, and measuring. Currently, angr, Hex-Rays (IDA Pro), and Ghidra are supported as decompilers.
 
 If you are only looking to use the SAILR version of angr, then jump to the [using SAILR on angr](#using-sailr-on-angr-decompiler) section.
 
@@ -23,6 +23,7 @@ If you are only looking to use the SAILR version of angr, then jump to the [usin
 
 
 ## Overview:
+This repo contains the `sailreval` Python package and information about the SAILR paper artifacts.
 `sailreval` is the Python package that contains all the code for running the evaluation pipeline.
 `sailreval` evaluates the quality of decompilation by comparing it to the original source code.
 This evaluation is done in four phases:
@@ -35,33 +36,48 @@ Each phase requires the phase directly before it to have run, however, you can s
 required files. For example, you can skip compilation phase if you already have the object files and preprocessed source.
 
 ## Installation
-`sailreval` can be used in two ways: locally or in a docker container. If you plan on reproducing the results from the paper,
-or using pre-set decompilers, then you should use the docker container.
-Run the setup script to install the dependencies:
+The `sailreval` package can be used in two ways: locally or in a docker container.
+If you plan on reproducing the results of the SAILR paper, or using some pre-packaged decompiler like Ghidra, than you
+will need both. Below are two methods for installing, one is heavy (docker and local) and one is light (only local).
+Make sure you have Docker installed on your system. 
+
+### Install Script (Recommended)
+On Linux and MacOS:
 ```bash
 ./setup.sh
 ```
 
-This will install the Python package locally and build the docker container. If you know you don't want to use the docker
-container, then you can directly install the Python package with `pip3 insatll .`. Note: you need `graphviz` on your system.
+This will build the Docker container, install system dependencies, and install the Python package locally.
 
+### Only Python Package
+If you want to use only local decompilers, and you have the build dependencies installed for your compiled project, you
+can install the Python package without the Docker container. For an example of this use case, see 
+our [CI runner](./.github/workflows/python-app.yml).
+```bash
+pip3 insatll -e .
+```
+
+Note: you will need to install the system dependencies for the Python project yourself, listed [here]([CI runner](./.github/workflows/python-app.yml).
+The package is also available on PyPi, so remote installation works as well. 
+
+### Install Verification
 Verify the installation by running:
 ```bash
 ./scripts/verify_pipeline.sh
 ```
 
-If your installation is correct, you should see some final output like:
-```
+This will use both the Docker container and your local install to run the Pipeline. 
+If you installed correctly, you should see some final output like:
+```md
 # Evaluation Data
 ## Stats
 Layout: ('sum', 'mean', 'median')
 ### O2
-Metric     | source      | angr_sailr  | angr_dream 
+Metric     | source      | angr_sailr  | angr_dream
 ---------- | ----------- | ----------- | -----------
-cfged      | 0/0/0.0     | 14/1.75/2.0 | 34/4.25/2.0
+gotos      | 1/0.12/0.0  | 1/0.12/0.0     | 0/0/0.0
 ...
 ```
-
 
 ## Usage
 After installation, if you used the script normally (i.e. the docker install), than you can use the `docker-eval.sh` script
