@@ -9,8 +9,8 @@ docker run \
   -it \
   --rm \
   -v $PWD:/SAILR \
-  sailr-eval "${@:1}"
+  sailr-eval "${@:1}" || exit 1
 
-echo "[+] Done! Remember to update the perms on your results: 'sudo chown \$USER:\$USER -R results'"
-#sudo chown $USER:$USER -R results/
+#echo "[+] Done! Remember to update the perms on your results: 'sudo chown \$USER:\$USER -R results'"
+sudo chown $USER:$USER -R results/
 exit 0
