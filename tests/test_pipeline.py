@@ -59,10 +59,12 @@ class TestPipeline(unittest.TestCase):
             assert project_results[dec][f"{SAILR_METRICS.FUNC_CALLS}_sum"] > 0
 
         # verify we had the same number of functions as in source (8)
-        metadata = results["metadata"]
+        metadata = project_results["metadata"]
         assert metadata["total_unique_functions_in_src"] == 8
         assert metadata["total_unique_functions_in_all_metrics"] == 8
 
         # cleanup:
         eval_script_copy.unlink()
         results_file.unlink()
+        Path("full_summary.md").unlink()
+        Path("summary.md").unlink()

@@ -27,5 +27,5 @@ echo "[+] Running measurement pipeline (gotos, bools, calls, cfged)..." && \
 echo "[+] Running aggregation pipeline..." && \
 ./eval.py --summarize-targets example_project --use-dec source angr_sailr angr_dream --use-metric gotos cfged bools func_calls --show-stats && \
 # cleanup
-#rm -rf "$RESULTS_DIR/example_project" && \
+rm -rf "$RESULTS_DIR/example_project" && \
 echo "[+] The pipeline has successfully finished!" || (echo "[!] Pipeline failed, check the last stage it was in to figure out where!" && exit 1)
