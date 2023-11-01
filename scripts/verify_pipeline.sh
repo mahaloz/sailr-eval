@@ -2,7 +2,6 @@
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 PROJECT_DIR="$SCRIPT_DIR/.."
-EXAMPLE_PROJECT_DIR="$SCRIPT_DIR/../tests/example_project"
 RESULTS_DIR="$SCRIPT_DIR/../results/O2"
 CORES="$(nproc --all)"
 

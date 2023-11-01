@@ -28,11 +28,11 @@ jobs:
     - name: Install dependencies
       run: |
         pip install --upgrade pip
-        sudo apt-get update && sudo apt-get install unzip openjdk-19-jdk graphviz-dev -y
+        sudo apt-get update && sudo apt-get install gcc make strip unzip openjdk-19-jdk graphviz-dev -y
         pip3 install -e .
-        pip3 install angr
+        pip3 install angr pytest
     - name: Run verification tests
       run: |
         # a hack to allow for docker containers in github actions and ARM
         export JAVA_OPTS="-Djdk.lang.Process.launchMechanism=vfork" 
-        ./scripts/ci_verify_pipeline.sh
+        pytest tests/test_pipeline.py
