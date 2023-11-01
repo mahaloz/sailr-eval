@@ -28,7 +28,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install --upgrade pip
-        sudo apt-get update && sudo apt-get install gcc make strip unzip openjdk-19-jdk graphviz-dev -y
+        sudo apt-get update && sudo apt-get install gcc make binutils unzip openjdk-19-jdk graphviz-dev -y
         pip3 install -e .
         pip3 install angr pytest
     - name: Run verification tests
