@@ -30,15 +30,15 @@ This evaluation is done in four phases:
 1. [Compilation](#compilation): a project described in the [targets](./targets) directory is downloaded, preprocessed, and compiled into object files.
 2. [Decompilation](#decompilation): decompilers [supported in sailreval](./sailreval/decompilers) are used to decompile the object files into C source files.
 3. [Measurement](#measuring): the preprocessed source and decompiled source are compared using [metrics](./sailreval/metrics) in `sailreval`.
-4. [Aggregation](#aggregating): the result from the measurement are normalized for functions that had a metric on all decompilers.
+4. [Aggregation](#aggregating): the results from the measurement are normalized for functions that had a metric on all decompilers.
 
-Each phase requires the phase directly before it to have run, however, you can skip phases if you manually provide the
-required files. For example, you can skip compilation phase if you already have the object files and preprocessed source.
+Each phase requires the phase directly before it runs; however, you can skip stages if you manually provide the
+required files. For example, you can skip the decompilation phase if you already have the object files and preprocessed source.
 
 ## Installation
 The `sailreval` package can be used in two ways: locally or in a docker container.
-If you plan on reproducing the results of the SAILR paper, or using some pre-packaged decompiler like Ghidra, than you
-will need both. Below are two methods for installing, one is heavy (docker and local) and one is light (only local).
+If you plan on reproducing the results of the SAILR paper or using some pre-packaged decompiler like Ghidra, then you
+will need both. Below are two methods for installing: one is heavy (docker and local), and one is light (only local).
 Make sure you have Docker installed on your system. 
 
 ### Install Script (Recommended)
@@ -50,7 +50,7 @@ On Linux and MacOS:
 This will build the Docker container, install system dependencies, and install the Python package locally.
 
 ### Only Python Package
-If you want to use only local decompilers, and you have the build dependencies installed for your compiled project, you
+If you want to use only local decompilers and you have the build dependencies installed for your compiled project, you
 can install the Python package without the Docker container. For an example of this use case, see 
 our [CI runner](./.github/workflows/python-app.yml).
 ```bash
@@ -67,7 +67,7 @@ Verify the installation by running:
 ```
 
 This will use both the Docker container and your local install to run the Pipeline. 
-If you installed correctly, you should see some final output like:
+If you installed it correctly, you should see some final output like:
 ```md
 # Evaluation Data
 ## Stats
