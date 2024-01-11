@@ -330,8 +330,9 @@ You can now use the `sailreval` package to aggregate the results like so to get 
 ### Reproducing SAILR paper results
 We ran the entire pipeline of SAILR on an Ubuntu 22.04 machine that had 40 logical cores and 64 GB of RAM.
 With these specs, it took about 8 hours to run the entire pipline for all 26 packages on the O2 optimization level.
-If you intend to reproduce the results as they were in the paper, checkout this repo to commit [e1af48353c1c5b32cc53cbaa015722d57767bd6e](https://github.com/mahaloz/sailr-eval/commit/e1af48353c1c5b32cc53cbaa015722d57767bd6e), 
-which was the last version used in the USENIX 2024 artifact evaluation process.
+If you intend to reproduce the results as they were in the paper, checkout this repo to commit [8442959e99c9d386c2cdfaf11346bf0f56e959eb](https://github.com/mahaloz/sailr-eval/commit/8442959e99c9d386c2cdfaf11346bf0f56e959eb), 
+which was the last version with minor fixes to the pipeline, but not edits to CFGED. 
+If you plan on evaluating modernly, use the latest commit, since it will have stability, speed, and other fixes to components of SAILR. 
 
 Due to slowness in processing of source with Joern, we recommend running the Joern stage **LOCALLY** and not in the 
 container. Here is an example run of only coreutils:
