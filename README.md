@@ -330,6 +330,8 @@ You can now use the `sailreval` package to aggregate the results like so to get 
 ### Reproducing SAILR paper results
 We ran the entire pipeline of SAILR on an Ubuntu 22.04 machine that had 40 logical cores and 64 GB of RAM.
 With these specs, it took about 8 hours to run the entire pipline for all 26 packages on the O2 optimization level.
+If you intend to reproduce the results as they were in the paper, checkout this repo to commit [e1af48353c1c5b32cc53cbaa015722d57767bd6e](https://github.com/mahaloz/sailr-eval/commit/e1af48353c1c5b32cc53cbaa015722d57767bd6e), 
+which was the last version used in the USENIX 2024 artifact evaluation process.
 
 Due to slowness in processing of source with Joern, we recommend running the Joern stage **LOCALLY** and not in the 
 container. Here is an example run of only coreutils:
@@ -349,6 +351,11 @@ To reproduce the results from the paper, you run the following evaluation script
 ```
 
 Run them one at a time to observe their output. 
+
+Note, you will likely **not** get the exact numbers shown in the paper, but the final conclusions on the numbers (i.e. the relative distance of each score) should be the same.
+This is due to a fundamental limitation in CFGED, which relies on GED to compute the edit distance between two CFGs.
+Since we never know if GED will conclude, we must use a timeout, which can be affected by the machine you run on.
+However, for most cases the timeout should not be triggered.
 
 ## Miscellaneous
 ### Compiling Windows Targets
