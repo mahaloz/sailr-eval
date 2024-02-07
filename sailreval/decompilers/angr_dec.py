@@ -77,13 +77,13 @@ def angr_decompile(
     #
 
     import angr
-    from angr.analyses.decompiler.optimization_passes import EagerReturnsSimplifier, LoweredSwitchSimplifier, \
-        ReturnDeduplicator
+    # TODO: update then when everything is in master of angr
+    from angr.analyses.decompiler.optimization_passes import LoweredSwitchSimplifier, ReturnDeduplicator
     from cle.backends.coff import Coff
     try:
         from angr.analyses.decompiler.optimization_passes import (
             DuplicationOptReverter, ConstPropOptReverter, CrossJumpReverter, FlipBooleanCmp, ITERegionConverter,
-            ReturnDeduplicator
+            ReturnDeduplicator, EagerReturnsSimplifier
         )
     except ImportError:
         DuplicationOptReverter = 1
@@ -92,6 +92,7 @@ def angr_decompile(
         FlipBooleanCmp = 4
         ITERegionConverter = 5
         ReturnDeduplicator = 6
+        EagerReturnsSimplifier = 7
 
     #
     # real code
