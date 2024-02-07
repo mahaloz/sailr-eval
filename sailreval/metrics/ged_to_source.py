@@ -28,7 +28,7 @@ def ged_exact_score(
     if source_cfg is None or dec_cfg is None:
         return None
 
-    return ged_exact(source_cfg, dec_cfg)
+    return ged_exact(dec_cfg, source_cfg)
 
 
 def ged_upperbound_score(
@@ -44,7 +44,7 @@ def ged_upperbound_score(
     if source_cfg is None or dec_cfg is None:
         return None
 
-    return ged_upperbound(source_cfg, dec_cfg)
+    return ged_upperbound(dec_cfg, source_cfg)
 
 
 def ged_max_score(
@@ -59,7 +59,7 @@ def ged_max_score(
     if source_cfg is None or dec_cfg is None:
         return None
 
-    return ged_max(source_cfg, dec_cfg)
+    return ged_max(dec_cfg, source_cfg)
 
 
 #
