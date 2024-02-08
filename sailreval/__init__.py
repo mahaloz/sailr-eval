@@ -22,6 +22,7 @@ class SAILR_METRICS:
     GED_MAX = "ged_max"
     GED_EXACT = "ged_exact"
     CFGED = "cfged"
+    HU_CFGED = "hu_cfged"
     GRAPH_SIZE = "graph_size"
     BLOCK_COUNT = "block_count"
     DEC_TIME = "dec_time"
