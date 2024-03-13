@@ -13,7 +13,6 @@ from sailreval import ALL_DECOMPILERS, SAILR_DECOMPILERS, SAILR_METRICS, ALL_MET
 from sailreval.utils import load_tomls_by_bin_name, bcolors
 from sailreval.utils.sailr_target import SAILRTarget
 from sailreval.utils.compile import DEFAULT_OPTIMIZATION_LEVELS, OPTIMIZATION_LEVELS
-from pyjoern import JoernServer, JoernClient
 
 from tqdm import tqdm
 import toml
@@ -793,6 +792,7 @@ def find_functions_with_bigger_metric(data, decompilers, metric, base_is_zero=Fa
 def _find_functions_with_switches(source_path: Path, port):
     source_name = source_path.name.split(".c")[0]
 
+    from pyjoern import JoernServer, JoernClient
     with JoernServer(port=port):
         client = JoernClient(source_path, port=port)
         functions = client.functions_with_switches()
