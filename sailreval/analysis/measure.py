@@ -10,8 +10,6 @@ from multiprocessing import Pool
 from typing import List
 
 import toml
-from pyjoern import JoernClient, JoernServer, fast_cfgs_from_source
-from pyjoern.mapping import cfg_root_node, correct_source_cfg_addrs
 
 from sailreval import ALL_DECOMPILERS, ALL_METRICS, SAILR_DECOMPILERS, SAILR_METRICS, JOERNLESS_SERVER_METRICS
 from sailreval.metrics import get_metric_function, POST_METRICS
@@ -33,6 +31,7 @@ def measure(filepath: Path, basename: str, metrics, functions, joern_port=9000, 
     if not require_joern:
         client = None
     else:
+        from pyjoern import JoernClient
         if client is None:
             client = JoernClient(filepath, port=joern_port, bin_name=basename)
     
@@ -91,6 +90,7 @@ def measure_files_with_joern_server(
             l.debug(f"JOERN server not needed for {basename}")
             measure_files(file_dir, basename, decompilers=decompilers, metrics=metrics, functions=functions, cores=cores, joern_port=joern_port, require_joern=False, cache_dir=cache_dir)
         else:
+            from pyjoern import JoernServer
             try:
                 with JoernServer(port=joern_port):
                     measure_files(file_dir, basename, decompilers=decompilers, metrics=metrics, functions=functions, cores=cores, joern_port=joern_port, cache_dir=cache_dir)
@@ -183,6 +183,9 @@ def measure_files(file_dir: Path, basename: str, decompilers=None, metrics=None,
             SAILR_METRICS.CODE_COMPLEXITY, SAILR_METRICS.GED_EXACT
         )
     )
+    if require_cfgs:
+        from pyjoern import fast_cfgs_from_source
+        from pyjoern.mapping import correct_source_cfg_addrs
 
     # collect the source CFGs first if they are needed
     source_cfgs, dec_cfgs = {}, {}

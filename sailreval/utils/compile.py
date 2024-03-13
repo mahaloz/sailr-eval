@@ -11,7 +11,6 @@ import traceback
 
 import toml
 from tqdm import tqdm
-from pyjoern import JoernClient, JoernServer
 
 from .sailr_target import SAILRTarget
 from ..utils import timeout
@@ -147,6 +146,8 @@ def _collect_function_lines(
     metric_amount = len(metrics) if metrics else 0
     cachable_results = {}
     basename = i_file.with_suffix("").with_suffix("").name
+
+    from pyjoern import JoernClient, JoernServer
 
     def _eval_with_server(joern_port, src_file, i_file):
         with JoernServer(port=joern_port):

@@ -2,7 +2,6 @@ import logging
 from pathlib import Path
 from typing import Dict
 
-from pyjoern.mapping import correct_decompiler_mappings, read_line_maps
 from cfgutils.similarity import ged_max, ged_upperbound, ged_exact
 from cfgutils.similarity import cfg_edit_distance as _cfg_edit_distance
 import networkx as nx
@@ -81,6 +80,7 @@ def cfg_edit_distance(
 
 
 def compute_cfg_edit_distance(dec_cfg, src_cfg, function, binary_path: Path, decompiler: str):
+    from pyjoern.mapping import correct_decompiler_mappings, read_line_maps
     binary_path = Path(binary_path)
     bin_dir = binary_path.parent
     bin_name = binary_path.with_suffix("").name

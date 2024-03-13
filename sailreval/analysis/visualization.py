@@ -1,15 +1,7 @@
-from pathlib import Path
 import textwrap
 from typing import Dict, List
-import matplotlib as mpl
-mpl.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-#import seaborn as sns
 
 STAT_TYPES = ("sum", "mean", "median")
-
 
 
 #
@@ -17,6 +9,8 @@ STAT_TYPES = ("sum", "mean", "median")
 #
 
 def plot_histogram(data1, data2, save_path="./histo_chart.png"):
+    import matplotlib as mpl
+    mpl.use('Agg')
     import matplotlib.pyplot as plt
     import numpy as np
     
@@ -58,6 +52,11 @@ def plot_histogram(data1, data2, save_path="./histo_chart.png"):
 
 
 def plot_diff_barchar(data_by_row: Dict[str, List], metric: str, decompilers: List, save_path="./diff_bar_chart.png"):
+    import matplotlib as mpl
+    mpl.use('Agg')
+    import matplotlib.pyplot as plt
+    import pandas as pd
+
     assert len(decompilers) == 2
     metric_data = data_by_row[metric]
 
@@ -79,6 +78,10 @@ def plot_diff_barchar(data_by_row: Dict[str, List], metric: str, decompilers: Li
 
 
 def plot_barchart(data_by_row: Dict[str, List], save_path="./bar_chart.png"):
+    import matplotlib as mpl
+    mpl.use('Agg')
+    import matplotlib.pyplot as plt
+    import pandas as pd
     data = {
         'Function': range(len(data_by_row["angr_sailr"])),
         'angr_phoenix': data_by_row["angr_phoenix"],
@@ -104,6 +107,9 @@ def plot_barchart(data_by_row: Dict[str, List], save_path="./bar_chart.png"):
 
 
 def plot_box_plot(data_by_row: Dict[str, List], save_path="./boxplot.png"):
+    import matplotlib as mpl
+    mpl.use('Agg')
+    import matplotlib.pyplot as plt
     plt.figure(figsize=(10, 6))  # Set the figure size
     plt.boxplot(data_by_row.values(), vert=False, widths=0.7)  # Plot the data
 
