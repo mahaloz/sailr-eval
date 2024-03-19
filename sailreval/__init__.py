@@ -1,4 +1,4 @@
-__version__ = "1.5.0"
+__version__ = "1.5.1"
 
 # create loggers
 import logging
