@@ -280,10 +280,10 @@ def generate_linemaps(dec, codegen, base_addr=0x400000):
         return
     
     base_addr = dec.project.loader.main_object.image_base_delta
-    if hasattr(dec, "unmodified_clinic_graph"):
-        nodes = dec.unmodified_clinic_graph.nodes
+    if hasattr(dec, "unoptimized_ail_graph"):
+        nodes = dec.unoptimized_ail_graph.nodes
     else:
-        l.warning(f"You are likely using an older version of angr that has no unmodified_clinic_graph."
+        l.critical(f"You are likely using an older version of angr that has no unoptimized_ail_graph."
                   f" Using clinic_graph instead, results will be less accurate...")
         nodes = dec.clinic.cc_graph.nodes
 
