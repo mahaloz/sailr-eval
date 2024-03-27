@@ -27,7 +27,7 @@ def ged_exact_score(
     if source_cfg is None or dec_cfg is None:
         return None
 
-    return ged_exact(dec_cfg, source_cfg)
+    return ged_exact(dec_cfg, source_cfg, check_max=True)
 
 
 def ged_upperbound_score(
