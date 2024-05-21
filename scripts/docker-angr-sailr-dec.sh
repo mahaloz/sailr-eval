@@ -14,6 +14,6 @@ docker run \
   -it \
   --rm \
   -v $PWD:/host \
-  angr-sailr-dec \
+  mahaloz/angr-sailr-dec \
   $BINARY_PATH \
   "${@:2}"

@@ -57,7 +57,7 @@ our [CI runner](./.github/workflows/python-app.yml).
 pip3 insatll -e .
 ```
 
-Note: you will need to install the system dependencies for the Python project yourself, listed [here]([CI runner](./.github/workflows/python-app.yml).
+Note: you will need to install the system dependencies for the Python project yourself, listed [here](./.github/workflows/python-app.yml).
 The package is also available on PyPi, so remote installation works as well. 
 
 ### Install Verification
@@ -370,5 +370,5 @@ Follow the following the steps to compile a windows target:
 6. Rename the `*.obj` to `*.o`
 7. If step `5` failed, then just remove the preprocessor option after running once
 
-To run the full pipeline for Widnows targets, you must have [llvm-pdbutil](https://github.com/shaharv/llvm-pdbutil-builds)
+To run the full pipeline for Windows targets, you must have [llvm-pdbutil](https://github.com/shaharv/llvm-pdbutil-builds)
 installed on the system. 
