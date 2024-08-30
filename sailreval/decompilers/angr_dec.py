@@ -254,7 +254,7 @@ def angr_decompile(
 
 def generate_linemaps(dec, codegen, base_addr=0x400000):
     import ailment
-    from angr.analyses.decompiler.structured_codegen.c import CStructuredCodeWalker, CFunctionCall, CIfElse, CIfBreak
+    from angr.analyses.decompiler.structured_codegen.c import CIfElse
 
     if codegen is None:
         return
@@ -426,10 +426,10 @@ def collect_countable_metrics(codegen):
     #
     # function calls
     #
+
     func_call_counts = defaultdict(int)
     class FunctionCallCounter(CStructuredCodeWalker):
-        @classmethod
-        def handle_CFunctionCall(cls, obj: CFunctionCall):
+        def handle_CFunctionCall(self, obj: CFunctionCall):
             if obj and obj.callee_func is not None:
                 func_call_counts[obj.callee_func.name] += 1
             return super().handle_CFunctionCall(obj)
