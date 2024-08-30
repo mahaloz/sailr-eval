@@ -59,18 +59,18 @@ def angr_dream_decompile(binary_path, functions=None, print_dec=False, **kwargs)
 
 
 def angr_decompile(
-        binary_path,
-        functions=None,
-        print_dec=False,
-        structurer="phoenix",
-        use_sailr=True,
-        func_dec_timeout=600,
-        name="angr_sailr",
-        improved_restruct=True,
-        dump_line_maps=True,
-        dump_early_metrics=True,
-        symboless=False,
-        disable_opts=[]
+    binary_path,
+    functions=None,
+    print_dec=False,
+    structurer="phoenix",
+    use_sailr=True,
+    func_dec_timeout=600,
+    name="angr_sailr",
+    improved_restruct=True,
+    dump_line_maps=True,
+    dump_early_metrics=True,
+    symboless=False,
+    disable_opts=[]
 ):
     #
     # Do dynamic imports
@@ -167,7 +167,6 @@ def angr_decompile(
         (_get_angr_dec_options("show_local_types"), False),
         (_get_angr_dec_options("show_externs"), False),
         (_get_angr_dec_options("show_casts"), False),
-        (_get_angr_dec_options("improve_structurer"), improved_restruct),
         (_get_angr_dec_options("largest_successor_tree_outside_loop"), improved_restruct),
         (_get_angr_dec_options("simplify_switches"), use_sailr),
     ]
