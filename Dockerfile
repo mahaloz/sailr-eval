@@ -47,16 +47,6 @@ RUN git clone https://github.com/angr/angr-dev.git && ( \
     cd ./angr-dev && \
     printf "I know this is a bad idea.\n" | ./setup.sh -i)
 
-
-# XXX: checkout angr to version at the submission of SAILR
-# if you want the latest version of angr-decompiler, with future fixes, remove this block
-RUN pip3 install sh && (cd ./angr-dev && \
-    ./admin/checkout_at.py a8bab649cfc18912d5bb3ce70ef57a4ae4039f53 && \
-    cd ./angr && \
-    git remote add mahaloz https://github.com/mahaloz/angr-sailr.git && \
-    git fetch mahaloz && \
-    git checkout mahaloz/sailr)
-
 # ===========================================================
 # Ghidra 10.1
 # ===========================================================

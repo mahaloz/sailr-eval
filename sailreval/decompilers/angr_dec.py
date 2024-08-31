@@ -13,6 +13,12 @@ _DEBUG = False
 l = logging.getLogger(__name__)
 
 
+class StructuringAlgos:
+    SAILR = "sailr"
+    PHOENIX = "phoenix"
+    DREAM = "dream"
+
+
 class timeout:
     def __init__(self, seconds=1, error_message='Timeout'):
         self.seconds = seconds
@@ -43,61 +49,53 @@ def _get_angr_dec_options(param_string):
 
 
 def angr_comb_decompile(binary_path, functions=None, print_dec=False, **kwargs):
-    return angr_decompile(binary_path, functions=functions, print_dec=print_dec, structurer="combing", use_sailr=False, name="angr_comb", improved_restruct=False, **kwargs)
+    # TODO: update this when combing gets places in master:
+    # https://github.com/angr/angr/pull/4166
+    return None
 
 
 def angr_improved_phoenix_decompile(binary_path, functions=None, print_dec=False, **kwargs):
-    return angr_decompile(binary_path, functions=functions, print_dec=print_dec, structurer="phoenix", use_sailr=False, name="angr_improved_phoenix", improved_restruct=True, **kwargs)
+    return angr_decompile(
+        binary_path, functions=functions, print_dec=print_dec, structurer=StructuringAlgos.SAILR,
+        name="angr_improved_phoenix", use_deoptimizers=True, **kwargs
+    )
 
 
 def angr_phoenix_decompile(binary_path, functions=None, print_dec=False, **kwargs):
-    return angr_decompile(binary_path, functions=functions, print_dec=print_dec, structurer="phoenix", use_sailr=False, name="angr_phoenix", improved_restruct=False, **kwargs)
+    return angr_decompile(
+        binary_path, functions=functions, print_dec=print_dec, structurer=StructuringAlgos.PHOENIX,
+        name="angr_phoenix", use_deoptimizers=False, **kwargs
+    )
 
 
 def angr_dream_decompile(binary_path, functions=None, print_dec=False, **kwargs):
-    return angr_decompile(binary_path, functions=functions, print_dec=print_dec, structurer="dream", use_sailr=False, name="angr_dream", improved_restruct=False, **kwargs)
+    return angr_decompile(
+        binary_path, functions=functions, print_dec=print_dec, structurer=StructuringAlgos.DREAM,
+        name="angr_dream", use_deoptimizers=False, **kwargs
+    )
 
 
 def angr_decompile(
-        binary_path,
-        functions=None,
-        print_dec=False,
-        structurer="phoenix",
-        use_sailr=True,
-        func_dec_timeout=600,
-        name="angr_sailr",
-        improved_restruct=True,
-        dump_line_maps=True,
-        dump_early_metrics=True,
-        symboless=False,
-        disable_opts=[]
+    binary_path,
+    functions=None,
+    print_dec=False,
+    structurer=StructuringAlgos.SAILR,
+    use_deoptimizers=True,
+    func_dec_timeout=600,
+    name="angr_sailr",
+    dump_line_maps=True,
+    dump_early_metrics=True,
+    symboless=False,
 ):
-    #
-    # Do dynamic imports
-    #
-
+    # do dynamic imports to avoid angr being imported on sailr-eval import
     import angr
-    # TODO: update then when everything is in master of angr
-    from angr.analyses.decompiler.optimization_passes import LoweredSwitchSimplifier, ReturnDeduplicator
+    from angr.analyses.decompiler.optimization_passes import (
+        LoweredSwitchSimplifier, ReturnDeduplicator, ReturnDuplicatorLow, ReturnDuplicatorHigh, CrossJumpReverter,
+        ConstPropOptReverter, DuplicationReverter, FlipBooleanCmp, ITERegionConverter
+    )
     from cle.backends.coff import Coff
-    try:
-        from angr.analyses.decompiler.optimization_passes import (
-            DuplicationOptReverter, ConstPropOptReverter, CrossJumpReverter, FlipBooleanCmp, ITERegionConverter,
-            ReturnDeduplicator, EagerReturnsSimplifier
-        )
-    except ImportError:
-        DuplicationOptReverter = 1
-        ConstPropOptReverter = 2
-        CrossJumpReverter = 3
-        FlipBooleanCmp = 4
-        ITERegionConverter = 5
-        ReturnDeduplicator = 6
-        EagerReturnsSimplifier = 7
 
-    #
-    # real code
-    #
-
+    # setup a CFG with Calling Conventions recovered
     angr_name = name
     proj = angr.Project(binary_path, auto_load_libs=False)
     is_windows = proj.loader.main_object.os == "windows" or isinstance(proj.loader.main_object, Coff)
@@ -120,33 +118,16 @@ def angr_decompile(
     if cc_failed:
         l.critical(f"All attempts to run CallingConvention Analysis failed on {binary_path}.")
 
-    all_optimization_passes = angr.analyses.decompiler.optimization_passes.get_default_optimization_passes("AMD64", "linux")
-
-    # decide to use options in SAILR package
-    opt_blacklist = [] if use_sailr else [
-        DuplicationOptReverter, ConstPropOptReverter, CrossJumpReverter, EagerReturnsSimplifier,
-        LoweredSwitchSimplifier, FlipBooleanCmp, ITERegionConverter, ReturnDeduplicator
+    # remove optimizations from the list that contradict a structuring pass
+    deoptimizers = [
+        LoweredSwitchSimplifier, ReturnDeduplicator, ReturnDuplicatorLow, ReturnDuplicatorHigh, CrossJumpReverter,
+        ConstPropOptReverter, DuplicationReverter, FlipBooleanCmp, ITERegionConverter
     ]
-    if is_windows and LoweredSwitchSimplifier not in opt_blacklist:
-         opt_blacklist.append(LoweredSwitchSimplifier)
-
-    if disable_opts:
-        loaded_opts = [
-            globals()[opt] for opt in disable_opts if opt in globals()
-        ]
-        for opt in loaded_opts:
-            if opt not in opt_blacklist:
-                opt_blacklist.append(opt) 
-
-    if improved_restruct:
-        # improves structuring gets boolean flipper
-        if FlipBooleanCmp in opt_blacklist:
-            opt_blacklist.remove(FlipBooleanCmp)
-
-    all_optimization_passes = [
-        p for p in all_optimization_passes
-        if p not in opt_blacklist
-    ]
+    all_optimization_passes = angr.analyses.decompiler.optimization_passes.get_default_optimization_passes(
+        "AMD64", "linux", disable_opts=[] if use_deoptimizers else deoptimizers
+    )
+    if is_windows and LoweredSwitchSimplifier in all_optimization_passes:
+        all_optimization_passes.remove(LoweredSwitchSimplifier)
 
     binary_path = Path(binary_path).absolute()
     bin_name = binary_path.with_suffix("").name
@@ -167,14 +148,13 @@ def angr_decompile(
         (_get_angr_dec_options("show_local_types"), False),
         (_get_angr_dec_options("show_externs"), False),
         (_get_angr_dec_options("show_casts"), False),
-        (_get_angr_dec_options("improve_structurer"), improved_restruct),
-        (_get_angr_dec_options("largest_successor_tree_outside_loop"), improved_restruct),
-        (_get_angr_dec_options("simplify_switches"), use_sailr),
+        (_get_angr_dec_options("largest_successor_tree_outside_loop"), structurer == StructuringAlgos.SAILR),
+        (_get_angr_dec_options("simplify_switches"), use_deoptimizers),
     ]
     # add extra option which may not be available based on commit version
     simplify_ifelse_opt = _get_angr_dec_options("simplify_ifelse")
     if simplify_ifelse_opt is not None:
-        options.append((simplify_ifelse_opt, improved_restruct))
+        options.append((simplify_ifelse_opt, use_deoptimizers))
 
     linemaps = {}
     metrics = {}
@@ -274,7 +254,7 @@ def angr_decompile(
 
 def generate_linemaps(dec, codegen, base_addr=0x400000):
     import ailment
-    from angr.analyses.decompiler.structured_codegen.c import CStructuredCodeWalker, CFunctionCall, CIfElse, CIfBreak
+    from angr.analyses.decompiler.structured_codegen.c import CIfElse
 
     if codegen is None:
         return
@@ -446,10 +426,10 @@ def collect_countable_metrics(codegen):
     #
     # function calls
     #
+
     func_call_counts = defaultdict(int)
     class FunctionCallCounter(CStructuredCodeWalker):
-        @classmethod
-        def handle_CFunctionCall(cls, obj: CFunctionCall):
+        def handle_CFunctionCall(self, obj: CFunctionCall):
             if obj and obj.callee_func is not None:
                 func_call_counts[obj.callee_func.name] += 1
             return super().handle_CFunctionCall(obj)
