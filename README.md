@@ -20,8 +20,10 @@ If you are looking to reproduce the exact results of the SAILR paper, then jump 
   - [Decompilation](#decompiling)
   - [Measuring](#measuring)
   - [Aggregation](#aggregating)
+- [Example Run](#example-run)
 - [Miscellaneous](#miscellaneous)
   - [Compiling Windows Targets](#compiling-windows-targets)
+- [Citation](#citation)
 
 
 ## Overview:
@@ -233,6 +235,16 @@ You can normalize across both projects for binaries and functions that only exis
 ./eval.py --merge-results ./results/O2/coreutils*/sailr_measured --use-dec source angr_sailr --use-metric gotos cfged
 ```
 
+## Example Run
+Here is an example run of the pipeline:
+```sh
+./docker-eval.sh --compile coreutils --cores 20 && \
+./eval.py --decompile coreutils --use-dec source --cores 20 && \
+./docker-eval.sh --decompile coreutils --use-dec ghidra angr_sailr angr_phoenix angr_dream angr_comb --cores 20 && \
+./eval.py --measure coreutils --use-metric gotos cfged bools func_calls --use-dec source ghidra angr_sailr angr_phoenix angr_dream angr_comb --cores 20 && \
+./eval.py --summarize-targets coreutils --use-dec source ghidra angr_sailr angr_phoenix angr_dream angr_comb --use-metric gotos cfged bools func_calls --show-stats
+```
+
 
 ## Miscellaneous
 ### Compiling Windows Targets
@@ -248,3 +260,14 @@ Follow the following the steps to compile a windows target:
 
 To run the full pipeline for Windows targets, you must have [llvm-pdbutil](https://github.com/shaharv/llvm-pdbutil-builds)
 installed on the system. 
+
+## Citation
+If you use this tool in your research, please cite out paper:
+```bib
+@inproceedings{basque2024ahoy,
+  title={Ahoy sailr! there is no need to dream of c: A compiler-aware structuring algorithm for binary decompilation},
+  author={Basque, Zion Leonahenahe and Bajaj, Ati Priya and Gibbs, Wil and O’Kain, Jude and Miao, Derron and Bao, Tiffany and Doup{\'e}, Adam and Shoshitaishvili, Yan and Wang, Ruoyu},
+  booktitle={Proceedings of the USENIX Security Symposium},
+  year={2024}
+}
+```
