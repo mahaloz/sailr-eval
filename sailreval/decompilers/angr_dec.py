@@ -93,6 +93,7 @@ def angr_decompile(
         LoweredSwitchSimplifier, ReturnDeduplicator, ReturnDuplicatorLow, ReturnDuplicatorHigh, CrossJumpReverter,
         ConstPropOptReverter, DuplicationReverter, FlipBooleanCmp, ITERegionConverter
     )
+    from angr.analyses.decompiler.presets import DECOMPILATION_PRESETS
     from cle.backends.coff import Coff
 
     # setup a CFG with Calling Conventions recovered
@@ -123,7 +124,7 @@ def angr_decompile(
         LoweredSwitchSimplifier, ReturnDeduplicator, ReturnDuplicatorLow, ReturnDuplicatorHigh, CrossJumpReverter,
         ConstPropOptReverter, DuplicationReverter, FlipBooleanCmp, ITERegionConverter
     ]
-    all_optimization_passes = angr.analyses.decompiler.optimization_passes.get_default_optimization_passes(
+    all_optimization_passes = DECOMPILATION_PRESETS["full"].get_optimization_passes(
         "AMD64", "linux", disable_opts=[] if use_deoptimizers else deoptimizers
     )
     if is_windows and LoweredSwitchSimplifier in all_optimization_passes:
