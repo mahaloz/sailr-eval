@@ -435,7 +435,8 @@ def collect_countable_metrics(codegen):
                 func_call_counts[obj.callee_func.name] += 1
             return super().handle_CFunctionCall(obj)
 
-    FunctionCallCounter.handle(codegen.cfunc)
+    call_counter = FunctionCallCounter()
+    call_counter.handle(codegen.cfunc)
     func_call_counts = dict(func_call_counts)
     if not func_call_counts:
         func_call_counts = {"__empty__": 0}
