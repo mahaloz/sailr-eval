@@ -7,7 +7,7 @@ from .total_loc import count_total_loc
 from .nesting_count import count_nesting_ifs
 from .duplication import count_func_calls
 from .total_bools import count_if_bools
-from .ged_to_source import ged_upperbound_score, cfg_edit_distance, ged_max_score, block_count, ged_exact_score, graph_size
+from .ged_to_source import ged_upperbound_score, cfg_edit_distance, ged_max_score, block_count, ged_exact_score, graph_size, hu_cfged_score
 from .post_metrics import norm_cfged, zero_cfged, funcs_w_goto, goto_func_cfged
 
 from sailreval import SAILR_METRICS
@@ -36,6 +36,7 @@ METRICS = {
     SAILR_METRICS.GED_UPPERBOUND: ged_upperbound_score,
     SAILR_METRICS.GED_MAX: ged_max_score,
     SAILR_METRICS.GED_EXACT: ged_exact_score,
+    SAILR_METRICS.HU_CFGED: hu_cfged_score,
 
     # Important Metrics
     SAILR_METRICS.GOTO_COUNT: count_total_gotos,

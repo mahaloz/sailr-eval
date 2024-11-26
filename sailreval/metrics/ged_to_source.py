@@ -2,7 +2,8 @@ import logging
 from pathlib import Path
 from typing import Dict
 
-from cfgutils.similarity import ged_max, ged_upperbound, ged_exact
+from pyjoern.mapping import correct_decompiler_mappings, read_line_maps
+from cfgutils.similarity import ged_max, ged_upperbound, ged_exact, hu_cfged
 from cfgutils.similarity import cfg_edit_distance as _cfg_edit_distance
 import networkx as nx
 
@@ -160,3 +161,20 @@ def block_count(
         return None
 
     return len(dec_cfg.nodes)
+
+
+#
+# More special case GED algorithms
+#
+
+def hu_cfged_score(
+    func_name, client, source_cfgs: Dict[str, nx.DiGraph] = None, dec_cfgs: Dict[str, nx.DiGraph] = None,
+    decompiler=None, binary_path=None, **kwargs
+):
+    if decompiler == "source":
+        return float(0)
+    source_cfg, dec_cfg = _verify_has_valid_graphs(func_name, client, source_cfgs, dec_cfgs, decompiler, binary_path)
+    if source_cfg is None or dec_cfg is None:
+        return None
+
+    return hu_cfged(dec_cfg, source_cfg)

@@ -93,6 +93,7 @@ def angr_decompile(
         LoweredSwitchSimplifier, ReturnDeduplicator, ReturnDuplicatorLow, ReturnDuplicatorHigh, CrossJumpReverter,
         ConstPropOptReverter, DuplicationReverter, FlipBooleanCmp, ITERegionConverter
     )
+    from angr.analyses.decompiler.presets import DECOMPILATION_PRESETS
     from cle.backends.coff import Coff
 
     # setup a CFG with Calling Conventions recovered
@@ -123,7 +124,7 @@ def angr_decompile(
         LoweredSwitchSimplifier, ReturnDeduplicator, ReturnDuplicatorLow, ReturnDuplicatorHigh, CrossJumpReverter,
         ConstPropOptReverter, DuplicationReverter, FlipBooleanCmp, ITERegionConverter
     ]
-    all_optimization_passes = angr.analyses.decompiler.optimization_passes.get_default_optimization_passes(
+    all_optimization_passes = DECOMPILATION_PRESETS["full"].get_optimization_passes(
         "AMD64", "linux", disable_opts=[] if use_deoptimizers else deoptimizers
     )
     if is_windows and LoweredSwitchSimplifier in all_optimization_passes:
@@ -434,7 +435,8 @@ def collect_countable_metrics(codegen):
                 func_call_counts[obj.callee_func.name] += 1
             return super().handle_CFunctionCall(obj)
 
-    FunctionCallCounter.handle(codegen.cfunc)
+    call_counter = FunctionCallCounter()
+    call_counter.handle(codegen.cfunc)
     func_call_counts = dict(func_call_counts)
     if not func_call_counts:
         func_call_counts = {"__empty__": 0}
